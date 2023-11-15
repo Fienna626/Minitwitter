@@ -198,21 +198,28 @@ public class MainPanel implements ActionListener{
 	private void demoContent()
 	{
 		// Demo Content
-		User u1 = new User("Adam");
-		User u2 = new User("Eve");
+		User u1 = new User("Alice");
+		User u2 = new User("Mad hatter");
+		User u3 = new User("Queen of hearts");
+		User u4 = new User("Story teller");
 		u1.follow(u2);
 		u2.follow(u1);
 		
-		UserGroup g1 = new UserGroup("HIST");
-		UserGroup g2 = new UserGroup("CS");
+		UserGroup g1 = new UserGroup("WONDERLAND");
+		UserGroup g2 = new UserGroup("Valorant");
+		UserGroup g3 = new UserGroup("Queen's castle");
+		root.add(u4);
 		g1.add(u1);
 		g1.add(u2);
-		g2.add(new User("Alan"));
-		g2.add(new User("Ada"));
-		g2.add(new User("Grace"));
+		g2.add(new User("Viper"));
+		g2.add(new User("KillJoy"));
+		g2.add(new User("Breach"));
 		root.add(g1);
 		root.add(g2);
+		g1.add(g3);
+		g3.add(u3);
 		
+
 		expandTree();
 			
 	}
