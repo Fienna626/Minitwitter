@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.swing.*;
@@ -24,12 +26,18 @@ public class UserPanel implements ActionListener{
 	
 	private JButton buttonFollowUser = new JButton("Follow User");
 	private JButton buttonPostTweet = new JButton("Post Tweet");
+		
+	SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+	private String creationTime;
+	private String lastUpdateTime = "Last Update: Never";
+	
+	private JLabel labelLastUpdateTime = new JLabel(lastUpdateTime);
 	
 	// constructor
 	public UserPanel(User node)
 	{    	
 		user = node;
-		
+    	
     	// set text fields properties
     	textFollowUser.setPreferredSize(new Dimension(270, 30));
     	textPostTweet.setPreferredSize(new Dimension(270, 30));
@@ -59,6 +67,7 @@ public class UserPanel implements ActionListener{
     	panelBottom.add(textPostTweet);
     	panelBottom.add(buttonPostTweet);
     	panelBottom.add(panelTweet);
+    	panelBottom.add(labelLastUpdateTime);
     	
     	panelTweet.setLayout(new BoxLayout (panelTweet, BoxLayout.Y_AXIS));
 		//updatePanelTweet();
@@ -67,11 +76,10 @@ public class UserPanel implements ActionListener{
     	panelFollow.setPreferredSize(new Dimension(375, 155));
     	
     	panelTweet.setBackground(new Color(255, 255, 255));
-    	panelTweet.setPreferredSize(new Dimension(375, 115));
+    	panelTweet.setPreferredSize(new Dimension(375, 100));
 
     	// set frame properties
     	//frameMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frameMain.setTitle(user.getID());
     	frameMain.setResizable(false);
     	frameMain.setSize(400, 400);
     	frameMain.setLayout(null);
@@ -85,14 +93,16 @@ public class UserPanel implements ActionListener{
 	{
 		updatePanelFollow();
 		updatePanelTweet();
-		frameMain.setTitle(user.getID());	
+		creationTime = dateFormat.format(new Date(user.getCreationTime()));
+		frameMain.setTitle(user.getID() + " (Created on: " + creationTime + ")");
 	}
 	
 	public void showPanel()
 	{
 		updatePanelFollow();
 		updatePanelTweet();
-		frameMain.setTitle(user.getID());
+		creationTime = dateFormat.format(new Date(user.getCreationTime()));
+		frameMain.setTitle(user.getID() + " (Created on: " + creationTime + ")");
 		frameMain.setVisible(true);
 	}
 	
@@ -162,6 +172,10 @@ public class UserPanel implements ActionListener{
 			updatePanelTweet();
 			frameMain.setVisible(true);
 			textPostTweet.setText(null);
+			
+			// Project 3: Update LastUpdateTime
+			user.setLastUpdateTime(System.currentTimeMillis());
+			labelLastUpdateTime.setText("Last Update: " + dateFormat.format(user.getLastUpdateTime()));
 			
 			// notify all followers (Observer)
 			user.notifyTweet();

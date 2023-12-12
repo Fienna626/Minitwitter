@@ -9,10 +9,13 @@ public class User extends Node implements Subject, Observer, Visitable {
 	private Vector<User> following = new Vector<User>();
 	private Vector<String> tweets = new Vector<String>();
 	private Vector<String> feeds = new Vector<String>();
-	
+	private long creationTime;
+	private long lastUpdateTime;
+
 	// constructor
 	public User(String iD) {
 		userID = iD;
+		creationTime = System.currentTimeMillis();
 	}
 	
 	// getters & setters
@@ -32,9 +35,22 @@ public class User extends Node implements Subject, Observer, Visitable {
 		return feeds;
 	}
 	
+	public long getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(long lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+	
 	@Override
 	public String getID() {
 		return userID;
+	}
+	
+	@Override
+	public long getCreationTime() {
+		return creationTime;
 	}
 
 	@Override
